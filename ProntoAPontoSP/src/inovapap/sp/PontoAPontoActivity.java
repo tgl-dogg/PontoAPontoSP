@@ -5,7 +5,11 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import inovapap.sp.gtfs.Stops;
 import inovapap.sp.util.Geral;
@@ -41,6 +45,7 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 			initViews();
+			initMap();
 
 			// InputStream is = getResources().openRawResource(R.raw.stops);
 			// Parser parser = new Parser();
@@ -74,11 +79,17 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		ivRoute.setOnClickListener(this);
 		ivAlert = (ImageView) findViewById(R.id.alert_image_view);
 		ivAlert.setOnClickListener(this);
-		
+
 		android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-		mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map_fragment);
-		
+		mapFragment = (SupportMapFragment) fragmentManager
+				.findFragmentById(R.id.map_fragment);
+
 		map = mapFragment.getMap();
+	}
+
+	private void initMap() {
+		map.setMyLocationEnabled(true);
+
 	}
 
 	@Override
