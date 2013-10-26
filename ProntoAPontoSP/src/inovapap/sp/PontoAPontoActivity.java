@@ -3,14 +3,18 @@ package inovapap.sp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import inovapap.sp.gtfs.Route;
 import inovapap.sp.gtfs.Stops;
 import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
@@ -37,11 +41,15 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	private LinearLayout llLayout, llTitleLayout, llBottomLayout;
 	private RelativeLayout rlMapLayout;
 	private TableRow trUpper, trLower;
-	private ImageView ivHere, ivWeather, ivSync, ivTourism, ivRoute, ivAlert, ivSuggestion;
+	private ImageView ivHere, ivWeather, ivSync, ivTourism, ivRoute, ivAlert,
+			ivSuggestion;
 	private EditText etOrigin, etDestination;
 
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
+
+	private ArrayList<Route> routes;
+	private ArrayList<Stops> stops;
 
 	@Override
 	protected void onCreate(Bundle b) {
@@ -52,11 +60,8 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 			initViews();
 			initMap();
-
-			// InputStream is = getResources().openRawResource(R.raw.stops);
-			// Parser parser = new Parser();
-			// String line = parser.generalParseLine(is);
-			// Stops stop = new Stops(line);
+			loadStops();
+			loadRoutes();
 
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
@@ -104,9 +109,46 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 	}
 
+	private void loadStops() {
+		stops = new ArrayList<Stops>();
+		int counter = 0;
+
+		InputStream is = getResources().openRawResource(R.raw.stops);
+		Parser parser = new Parser();
+		ArrayList<String> line = parser.generalParseLine(is);
+
+		int size = line.size();
+		for (int i = 0; i < size; i++) {
+			Stops stop = new Stops(line.get(0));
+			stops.add(stop);
+			ILog.i("counter", "" + ++counter);
+		}
+		
+		line.clear();
+	}
+
+	private void loadRoutes() {
+		routes = new ArrayList<Route>();
+		int counter = 0;
+
+		InputStream is = getResources().openRawResource(R.raw.routes);
+		Parser parser = new Parser();
+		ArrayList<String> line = parser.generalParseLine(is);
+
+		int size = line.size();
+		for (int i = 0; i < size; i++) {
+			Route route = new Route(line.get(0));
+			routes.add(route);
+			ILog.i("counter", "" + ++counter);
+		}
+
+		line.clear();
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		
 		// TODO adicionar seleção de casos para as views.
 		}
 	}
@@ -121,8 +163,11 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+			int arg3) {
+	}
 
 	@Override
-	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+	}
 }

@@ -70,6 +70,7 @@ int id normal 0x7f060001
 int id origin_edit_text 0x7f06000a
 int id route_image_view 0x7f060014
 int id satellite 0x7f060002
+int id suggestion_image_view 0x7f060016
 int id sync_image_view 0x7f060011
 int id terrain 0x7f060003
 int id textView1 0x7f060006
