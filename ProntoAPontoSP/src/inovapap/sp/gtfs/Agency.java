@@ -67,5 +67,4 @@ public class Agency {
 	public void setAgencyLang(String agencyLang) {
 		this.agencyLang = agencyLang;
 	}
-
 }
