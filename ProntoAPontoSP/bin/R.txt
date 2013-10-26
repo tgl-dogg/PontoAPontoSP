@@ -58,7 +58,7 @@ int drawable ic_plusone_tall_off_client 0x7f02001c
 int drawable ic_sptrans 0x7f02001d
 int id alert_image_view 0x7f060015
 int id bottom_linear_layout 0x7f060012
-int id destination_auto_complete_text_view 0x7f06000d
+int id destination_edit_text 0x7f06000d
 int id here_image_view 0x7f06000b
 int id hybrid 0x7f060004
 int id imageView1 0x7f060005
@@ -67,7 +67,7 @@ int id map_fragment 0x7f06000f
 int id map_relative_layout 0x7f06000e
 int id none 0x7f060000
 int id normal 0x7f060001
-int id origin_auto_complete_text_view 0x7f06000a
+int id origin_edit_text 0x7f06000a
 int id route_image_view 0x7f060014
 int id satellite 0x7f060002
 int id sync_image_view 0x7f060011
