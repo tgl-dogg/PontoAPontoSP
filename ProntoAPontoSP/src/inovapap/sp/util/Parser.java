@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Parser {
 	private final String TAG = "Parser ";
-	
+
 	// File file = new File("file.txt");
 	public String generalParseLine(File file) {
 		BufferedReader reader = null;
@@ -76,22 +76,26 @@ public class Parser {
 		String s = null;
 
 		try {
-			s = txt.substring(1, txt.length() - 2);
+			s = txt;
+
+			if (s.indexOf('\"') != -1) {
+				s = txt.substring(1, txt.length() - 2);
+			}
 		} catch (Exception ex) {
 			ILog.e(TAG + "stringParse", ex.getMessage());
 		}
 
 		return s;
 	}
-	
-	public String removeComma(String txt){
+
+	public String removeComma(String txt) {
 		String s = txt;
 		int i = txt.indexOf(',');
-		
-		if(i > 0){
-			s = txt.substring(i+1);
+
+		if (i > 0) {
+			s = txt.substring(i + 1);
 		}
-		
-		return s;				
+
+		return s;
 	}
 }
