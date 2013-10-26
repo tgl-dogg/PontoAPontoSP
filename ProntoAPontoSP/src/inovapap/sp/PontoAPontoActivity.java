@@ -20,13 +20,14 @@ public class PontoAPontoActivity extends FragmentActivity {
 	protected void onCreate(Bundle b) {
 		try {
 			super.onCreate(b);
+			setContentView(R.layout.interface_layout);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			
 //			InputStream is = getResources().openRawResource(R.raw.stops);
 //			Parser parser = new Parser();
 //			String line = parser.generalParseLine(is);
 //			Stops stop = new Stops(line);
 			
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
