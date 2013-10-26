@@ -28,7 +28,7 @@
             </AutoCompleteTextView>
 
             <ImageView
-                android:id="@+id/destination_auto_complete_text_view"
+                android:id="@+id/here_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
