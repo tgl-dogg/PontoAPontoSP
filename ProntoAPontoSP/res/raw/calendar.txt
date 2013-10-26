@@ -1,4 +1,3 @@
-"service_id","monday","tuesday","wednesday","thursday","friday","saturday","sunday","start_date","end_date"
 USD,1,1,1,1,1,1,1,"20080101",20140301
 U__,1,1,1,1,1,0,0,"20080101",20140301
 US_,1,1,1,1,1,1,0,"20080101",20140301

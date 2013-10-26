@@ -1,4 +1,3 @@
-"stop_id","stop_name","stop_desc","stop_lat","stop_lon"
 14757,"Joao Dias","Term. João Dias Ref.: R Manoel Homem De Andrade",-23.643780,-46.732956
 18833,"Santo Amaro","Term. Santo Amaro Ref.: Av Pe Jose Maria Cep:04753-60",-23.654365,-46.713015
 18834,"Nova Cachoeirinha","Term. Vila Nova Cachoeirinha Ref.: Av. Inajar De Souza S/n - Cep 02861-190",-23.474476,-46.669327

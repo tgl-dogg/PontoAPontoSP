@@ -1,4 +1,3 @@
-"route_id","agency_id","route_short_name","route_long_name","route_type","route_color","route_text_color"
 "1016-10","1","1016-10","Cemiterio Do Horto - Center Norte",3,"",""
 "1017-10","1","1017-10","Perus - Vila Iorio",3,"",""
 "1018-10","1","1018-10","Vila Rosa - Metrô Santana",3,"",""
