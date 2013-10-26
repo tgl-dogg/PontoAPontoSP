@@ -26,7 +26,6 @@ public class Agency {
 		txt = parse.removeComma(txt);
 		
 		this.agencyLang = parse.stringParse(txt);
-		txt = parse.removeComma(txt);
 	}
 	
 	public int getAgencyId() {
