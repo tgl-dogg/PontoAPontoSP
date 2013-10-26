@@ -1,42 +1,21 @@
 package inovapap.sp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import inovapap.sp.gtfs.Route;
-import inovapap.sp.gtfs.Shapes;
-import inovapap.sp.gtfs.StopTimes;
-import inovapap.sp.gtfs.Stops;
-import inovapap.sp.gtfs.Trips;
-import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
-import inovapap.sp.util.Parser;
 import android.content.pm.ActivityInfo;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class PontoAPontoActivity extends FragmentActivity implements
 		OnClickListener, TextWatcher {
@@ -52,12 +31,6 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
 
-	private ArrayList<Route> routes;
-	private ArrayList<Stops> stops;
-	private ArrayList<StopTimes> stopTimes;
-	private ArrayList<Trips> trips;
-	private ArrayList<Shapes> shapes;
-
 	@Override
 	protected void onCreate(Bundle b) {
 		try {
@@ -67,13 +40,6 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 			initViews();
 			initMap();
-			
-			loadStops();
-			loadRoutes();
-			loadStopTimes();
-			loadTrips();
-			loadShapes();
-
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
@@ -118,121 +84,6 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	private void initMap() {
 		map.setMyLocationEnabled(true);
 
-	}
-
-	private void loadStops() {
-		stops = new ArrayList<Stops>();
-		int counter = 0;
-
-		InputStream is = getResources().openRawResource(R.raw.stops);
-		Parser parser = new Parser();
-		ArrayList<String> line = parser.generalParseLine(is);
-		
-		try {
-			is.close();
-		} catch (Exception ex) {
-			ILog.e(TAG + "loadStops()", ex.getMessage());
-		}
-
-		for (String s : line) {
-			Stops stop = new Stops(s);
-			stops.add(stop);
-			ILog.i("StopCounter", "" + ++counter);
-		}
-		
-		line.clear();
-	}
-	
-	private void loadStopTimes() {
-		stopTimes = new ArrayList<StopTimes>();
-		int counter = 0;
-
-		InputStream is = getResources().openRawResource(R.raw.stop_times);
-		Parser parser = new Parser();
-		ArrayList<String> line = parser.generalParseLine(is);
-		
-		try {
-			is.close();
-		} catch (Exception ex) {
-			ILog.e(TAG + "loadStopTimes()", ex.getMessage());
-		}
-
-		for (String s : line) {
-			StopTimes stopTime = new StopTimes(s);
-			stopTimes.add(stopTime);
-			ILog.i("StopTimesCounter", "" + ++counter);
-		}
-		
-		line.clear();
-	}
-
-	private void loadRoutes() {
-		routes = new ArrayList<Route>();
-		int counter = 0;
-
-		InputStream is = getResources().openRawResource(R.raw.routes);
-		Parser parser = new Parser();
-		ArrayList<String> line = parser.generalParseLine(is);
-		
-		try {
-			is.close();
-		} catch (Exception ex) {
-			ILog.e(TAG + "loadRoutes()", ex.getMessage());
-		}
-
-		for (String s : line) {
-			Route route = new Route(s);
-			routes.add(route);
-			ILog.i("RoutesCounter", "" + ++counter);
-		}
-
-		line.clear();
-	}
-	
-	private void loadTrips() {
-		trips = new ArrayList<Trips>();
-		int counter = 0;
-
-		InputStream is = getResources().openRawResource(R.raw.trips);
-		Parser parser = new Parser();
-		ArrayList<String> line = parser.generalParseLine(is);
-
-		for(String s : line){
-			Trips trip = new Trips(s);
-			trips.add(trip);
-			ILog.i("TripCounter", "" + ++counter);			
-		}
-		
-		line.clear();
-		
-		try {
-			is.close();
-		} catch (Exception ex) {
-			ILog.e(TAG + "loadTrips()", ex.getMessage());
-		}
-	}
-	
-	private void loadShapes() {
-		shapes = new ArrayList<Shapes>();
-		int counter = 0;
-
-		InputStream is = getResources().openRawResource(R.raw.shapes);
-		Parser parser = new Parser();
-		ArrayList<String> line = parser.generalParseLine(is);
-
-		for (String s : line) {
-			Shapes shape = new Shapes(s);
-			shapes.add(shape);
-			ILog.d("ShapeCounter", "" + ++counter);
-		}
-		
-		line.clear();
-		
-		try {
-			is.close();
-		} catch (Exception ex) {
-			ILog.e(TAG + "loadShapes()", ex.getMessage());
-		}
 	}
 
 	@Override
