@@ -3,7 +3,7 @@ package inovapap.sp.gtfs;
 import inovapap.sp.util.Parser;
 
 public class Route {
-	private int routeId;
+	private String routeId;
 	private int agencyId;
 	private String routeShortName;
 	private String routeLongName;
@@ -15,7 +15,7 @@ public class Route {
 		String txt = line;
 		Parser parse = new Parser();
 
-		this.routeId = parse.intParse(txt);
+		this.routeId = parse.stringParse(txt);
 		txt = parse.removeComma(txt);
 
 		this.agencyId = parse.intParse(txt);
@@ -84,11 +84,11 @@ public class Route {
 		this.agencyId = agencyId;
 	}
 
-	public int getRouteId() {
+	public String getRouteId() {
 		return routeId;
 	}
 
-	public void setRouteId(int routeId) {
+	public void setRouteId(String routeId) {
 		this.routeId = routeId;
 	}
 
