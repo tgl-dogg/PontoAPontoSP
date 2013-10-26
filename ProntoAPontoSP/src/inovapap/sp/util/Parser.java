@@ -5,19 +5,28 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Parser {
 	private final String TAG = "Parser ";
 
 	// File file = new File("file.txt");
-	public String generalParseLine(InputStream file) {
+	public ArrayList<String> generalParseLine(InputStream file) {
 		BufferedReader reader = null;
-		String text = null;
+		ArrayList<String> text = new ArrayList<String>();
 
 		try {
 			reader = new BufferedReader(new InputStreamReader(file));
 
-			if ((text = reader.readLine()) != null) {
+			int cont = 0;
+			while (true) {
+				String s = reader.readLine();
+				if (s != null) {
+					text.add(s);
+				} else {
+					break;
+				}
+				ILog.i(TAG + "parsing line", "" + ++cont);
 			}
 		} catch (FileNotFoundException ex) {
 			ILog.e(TAG + "generalParse", ex.getMessage());
@@ -40,6 +49,11 @@ public class Parser {
 		int i = -1;
 
 		try {
+			if (txt.indexOf('\"') == 0) {
+				txt = txt.substring(1);
+				txt = txt.substring(0, txt.indexOf('\"'));
+			}
+
 			int comma = txt.indexOf(',');
 
 			if (comma > 0) {
@@ -58,6 +72,11 @@ public class Parser {
 		float f = Float.NaN;
 
 		try {
+			if (txt.indexOf('\"') == 0) {
+				txt = txt.substring(1);
+				txt = txt.substring(0, txt.indexOf('\"'));
+			}
+
 			int comma = txt.indexOf(',');
 
 			if (comma > 0) {
@@ -76,6 +95,11 @@ public class Parser {
 		Double d = Double.NaN;
 
 		try {
+			if (txt.indexOf('\"') == 0) {
+				txt = txt.substring(1);
+				txt = txt.substring(0, txt.indexOf('\"'));
+			}
+
 			int comma = txt.indexOf(',');
 
 			if (comma > 0) {
@@ -115,10 +139,16 @@ public class Parser {
 
 	public String removeComma(String txt) {
 		String s = txt;
-		int i = txt.indexOf(',');
 
-		if (i > 0) {
-			s = txt.substring(i + 1);
+		if (s.indexOf('\"') == 0) {
+			txt = txt.substring(1);
+			s = txt.substring(txt.indexOf('\"'));
+		}
+
+		int i = s.indexOf(',');
+
+		if (i != -1) {
+			s = s.substring(i + 1);
 		}
 
 		return s;
