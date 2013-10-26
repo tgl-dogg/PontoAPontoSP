@@ -1,21 +1,21 @@
 package inovapap.sp.util;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class Parser {
 	private final String TAG = "Parser ";
 
 	// File file = new File("file.txt");
-	public String generalParseLine(File file) {
+	public String generalParseLine(InputStream file) {
 		BufferedReader reader = null;
 		String text = null;
 
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new InputStreamReader(file));
 
 			if ((text = reader.readLine()) != null) {
 			}
@@ -40,7 +40,13 @@ public class Parser {
 		int i = -1;
 
 		try {
-			i = Integer.valueOf(txt);
+			int comma = txt.indexOf(',');
+
+			if (comma > 0) {
+				i = Integer.valueOf(txt.substring(0, comma));
+			} else {
+				i = Integer.valueOf(txt);
+			}
 		} catch (Exception ex) {
 			ILog.e(TAG + "intParse", ex.getMessage());
 		}
@@ -52,7 +58,13 @@ public class Parser {
 		float f = Float.NaN;
 
 		try {
-			f = Float.valueOf(txt);
+			int comma = txt.indexOf(',');
+
+			if (comma > 0) {
+				f = Float.valueOf(txt.substring(0, comma));
+			} else {
+				f = Float.valueOf(txt);
+			}
 		} catch (Exception ex) {
 			ILog.e(TAG + "floatParse", ex.getMessage());
 		}
@@ -64,7 +76,13 @@ public class Parser {
 		Double d = Double.NaN;
 
 		try {
-			d = Double.valueOf(txt);
+			int comma = txt.indexOf(',');
+
+			if (comma > 0) {
+				d = Double.valueOf(txt.substring(0, comma));
+			} else {
+				d = Double.valueOf(txt);
+			}
 		} catch (Exception ex) {
 			ILog.e(TAG + "doubleParse", ex.getMessage());
 		}
@@ -79,7 +97,14 @@ public class Parser {
 			s = txt;
 
 			if (s.indexOf('\"') != -1) {
-				s = txt.substring(1, txt.length() - 2);
+				txt = txt.substring(1);
+				s = txt.substring(0, txt.indexOf('\"'));
+			} else {
+				int comma = txt.indexOf(',');
+
+				if (comma > 0) {
+					s = txt.substring(0, comma);
+				}
 			}
 		} catch (Exception ex) {
 			ILog.e(TAG + "stringParse", ex.getMessage());
