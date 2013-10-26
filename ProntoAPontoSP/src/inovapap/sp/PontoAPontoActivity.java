@@ -19,21 +19,27 @@ import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 
 public class PontoAPontoActivity extends FragmentActivity implements
-		OnClickListener {
+		OnClickListener, TextWatcher {
 	private final String TAG = "PontoAPontoActivity ";
 
 	private LinearLayout llLayout, llTitleLayout, llBottomLayout;
 	private RelativeLayout rlMapLayout;
 	private TableRow trUpper, trLower;
 	private ImageView ivHere, ivWeather, ivSync, ivTourism, ivRoute, ivAlert;
+	private EditText etOrigin, etDestination;
+
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
 
@@ -80,6 +86,10 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		ivAlert = (ImageView) findViewById(R.id.alert_image_view);
 		ivAlert.setOnClickListener(this);
 
+		etOrigin = (EditText) findViewById(R.id.origin_edit_text);
+		etOrigin.addTextChangedListener(this);
+		etDestination = (EditText) findViewById(R.id.destination_edit_text);
+
 		android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 		mapFragment = (SupportMapFragment) fragmentManager
 				.findFragmentById(R.id.map_fragment);
@@ -98,4 +108,19 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		// TODO adicionar seleção de casos para as views.
 		}
 	}
+
+	@Override
+	public void afterTextChanged(Editable arg0) {
+		if (etOrigin.getText().toString().equals("")) {
+			etDestination.setVisibility(View.GONE);
+		} else {
+			etDestination.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+	@Override
+	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 }
