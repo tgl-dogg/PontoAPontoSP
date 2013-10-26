@@ -8,34 +8,48 @@
     <LinearLayout
         android:id="@+id/title_linear_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".3"
-        android:orientation="horizontal" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="0dp"
+        <TableRow
+            android:id="@+id/title_upper_table_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <AutoCompleteTextView
+                android:id="@+id/origin_auto_complete_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="AutoCompleteTextView" >
+
+                <requestFocus />
+            </AutoCompleteTextView>
+
+            <ImageView
+                android:id="@+id/destination_auto_complete_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:src="@drawable/ic_launcher" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/title_lower_table_row"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10" >
+            android:visibility="gone" >
 
-            <requestFocus />
-        </EditText>
+            <AutoCompleteTextView
+                android:id="@+id/destination_auto_complete_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="AutoCompleteTextView" />
 
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+        </TableRow>
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
     </LinearLayout>
 
     <RelativeLayout
@@ -52,12 +66,20 @@
             class="com.google.android.gms.maps.SupportMapFragment" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/weather_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_sptrans" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_launcher" />
+
+        <ImageView
+            android:id="@+id/sync_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/weather_image_view"
+            android:src="@drawable/ic_plusone_standard_off_client" />
 
     </RelativeLayout>
 
@@ -69,21 +91,21 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/tourism_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_launcher" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/route_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/ic_launcher" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/alert_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
