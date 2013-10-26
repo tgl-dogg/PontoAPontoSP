@@ -4,10 +4,10 @@ import inovapap.sp.util.Parser;
 
 public class Shapes {
 	private int shapeId;
-	private float shapePtLat;
-	private float shapePtLon;
+	private double shapePtLat;
+	private double shapePtLon;
 	private int shapePtSequence;
-	private float shapeDistTraveled;
+	private double shapeDistTraveled;
 
 	public Shapes(String line) {
 		String txt = line;
@@ -16,16 +16,16 @@ public class Shapes {
 		this.shapeId = parse.intParse(txt);
 		txt = parse.removeComma(txt);
 
-		this.shapePtLat = parse.floatParse(txt);
+		this.shapePtLat = parse.doubleParse(txt);
 		txt = parse.removeComma(txt);
 
-		this.shapePtLon = parse.floatParse(txt);
+		this.shapePtLon = parse.doubleParse(txt);
 		txt = parse.removeComma(txt);
 		
 		this.shapePtSequence = parse.intParse(txt);
 		txt = parse.removeComma(txt);
 		
-		this.shapeDistTraveled = parse.floatParse(txt);
+		this.shapeDistTraveled = parse.doubleParse(txt);
 	}
 
 	public int getShapeId() {
@@ -36,19 +36,19 @@ public class Shapes {
 		this.shapeId = shapeId;
 	}
 
-	public float getShapePtLat() {
+	public double getShapePtLat() {
 		return shapePtLat;
 	}
 
-	public void setShapePtLat(float shapePtLat) {
+	public void setShapePtLat(double shapePtLat) {
 		this.shapePtLat = shapePtLat;
 	}
 
-	public float getShapePtLon() {
+	public double getShapePtLon() {
 		return shapePtLon;
 	}
 
-	public void setShapePtLon(float shapePtLon) {
+	public void setShapePtLon(double shapePtLon) {
 		this.shapePtLon = shapePtLon;
 	}
 
@@ -60,11 +60,11 @@ public class Shapes {
 		this.shapePtSequence = shapePtSequence;
 	}
 
-	public float getShapeDistTraveled() {
+	public double getShapeDistTraveled() {
 		return shapeDistTraveled;
 	}
 
-	public void setShapeDistTraveled(float shapeDistTraveled) {
+	public void setShapeDistTraveled(double shapeDistTraveled) {
 		this.shapeDistTraveled = shapeDistTraveled;
 	}
 }
