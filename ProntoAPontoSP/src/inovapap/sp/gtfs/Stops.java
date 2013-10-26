@@ -22,10 +22,10 @@ public class Stops {
 		this.stopDesc = parse.stringParse(txt);
 		txt = parse.removeComma(txt);
 		
-		this.stopLat = parse.floatParse(txt);
+		this.stopLat = parse.doubleParse(txt);
 		txt = parse.removeComma(txt);
 		
-		this.stopLon = parse.floatParse(txt);		
+		this.stopLon = parse.doubleParse(txt);		
 	}
 
 	public int getStopId() {
