@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import inovapap.sp.gtfs.Stops;
 import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
@@ -12,9 +15,23 @@ import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TableRow;
 
-public class PontoAPontoActivity extends FragmentActivity {
+public class PontoAPontoActivity extends FragmentActivity implements
+		OnClickListener {
 	private final String TAG = "PontoAPontoActivity ";
+
+	private LinearLayout llLayout, llTitleLayout, llBottomLayout;
+	private RelativeLayout rlMapLayout;
+	private TableRow trUpper, trLower;
+	private ImageView ivHere, ivWeather, ivSync, ivTourism, ivRoute, ivAlert;
+	private SupportMapFragment mapFragment;
+	private GoogleMap map;
 
 	@Override
 	protected void onCreate(Bundle b) {
@@ -22,14 +39,52 @@ public class PontoAPontoActivity extends FragmentActivity {
 			super.onCreate(b);
 			setContentView(R.layout.interface_layout);
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			
-//			InputStream is = getResources().openRawResource(R.raw.stops);
-//			Parser parser = new Parser();
-//			String line = parser.generalParseLine(is);
-//			Stops stop = new Stops(line);
-			
+
+			initViews();
+
+			// InputStream is = getResources().openRawResource(R.raw.stops);
+			// Parser parser = new Parser();
+			// String line = parser.generalParseLine(is);
+			// Stops stop = new Stops(line);
+
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
+		}
+	}
+
+	private void initViews() {
+		llLayout = (LinearLayout) findViewById(R.id.layout);
+		llTitleLayout = (LinearLayout) findViewById(R.id.title_linear_layout);
+		llBottomLayout = (LinearLayout) findViewById(R.id.bottom_linear_layout);
+
+		rlMapLayout = (RelativeLayout) findViewById(R.id.map_relative_layout);
+
+		trUpper = (TableRow) findViewById(R.id.title_upper_table_row);
+		trLower = (TableRow) findViewById(R.id.title_lower_table_row);
+
+		ivHere = (ImageView) findViewById(R.id.here_image_view);
+		ivHere.setOnClickListener(this);
+		ivWeather = (ImageView) findViewById(R.id.weather_image_view);
+		ivWeather.setOnClickListener(this);
+		ivSync = (ImageView) findViewById(R.id.sync_image_view);
+		ivSync.setOnClickListener(this);
+		ivTourism = (ImageView) findViewById(R.id.tourism_image_view);
+		ivTourism.setOnClickListener(this);
+		ivRoute = (ImageView) findViewById(R.id.route_image_view);
+		ivRoute.setOnClickListener(this);
+		ivAlert = (ImageView) findViewById(R.id.alert_image_view);
+		ivAlert.setOnClickListener(this);
+		
+		android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+		mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map_fragment);
+		
+		map = mapFragment.getMap();
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		// TODO adicionar seleção de casos para as views.
 		}
 	}
 }
