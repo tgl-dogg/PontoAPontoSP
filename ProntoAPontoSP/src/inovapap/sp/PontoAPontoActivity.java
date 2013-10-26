@@ -37,7 +37,7 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	private LinearLayout llLayout, llTitleLayout, llBottomLayout;
 	private RelativeLayout rlMapLayout;
 	private TableRow trUpper, trLower;
-	private ImageView ivHere, ivWeather, ivSync, ivTourism, ivRoute, ivAlert;
+	private ImageView ivHere, ivWeather, ivSync, ivTourism, ivRoute, ivAlert, ivSuggestion;
 	private EditText etOrigin, etDestination;
 
 	private SupportMapFragment mapFragment;
@@ -85,6 +85,8 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		ivRoute.setOnClickListener(this);
 		ivAlert = (ImageView) findViewById(R.id.alert_image_view);
 		ivAlert.setOnClickListener(this);
+		ivSuggestion = (ImageView) findViewById(R.id.suggestion_image_view);
+		ivSuggestion.setOnClickListener(this);
 
 		etOrigin = (EditText) findViewById(R.id.origin_edit_text);
 		etOrigin.addTextChangedListener(this);
