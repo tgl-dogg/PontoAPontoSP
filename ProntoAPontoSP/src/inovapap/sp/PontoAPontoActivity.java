@@ -2,6 +2,7 @@ package inovapap.sp;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -15,7 +16,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import inovapap.sp.gtfs.Route;
+import inovapap.sp.gtfs.Shapes;
+import inovapap.sp.gtfs.StopTimes;
 import inovapap.sp.gtfs.Stops;
+import inovapap.sp.gtfs.Trips;
 import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
 import inovapap.sp.util.Parser;
@@ -50,6 +54,9 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 	private ArrayList<Route> routes;
 	private ArrayList<Stops> stops;
+	private ArrayList<StopTimes> stopTimes;
+	private ArrayList<Trips> trips;
+	private ArrayList<Shapes> shapes;
 
 	@Override
 	protected void onCreate(Bundle b) {
@@ -60,8 +67,12 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 			initViews();
 			initMap();
+			
 			loadStops();
 			loadRoutes();
+			loadStopTimes();
+			loadTrips();
+			loadShapes();
 
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
@@ -116,12 +127,40 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		InputStream is = getResources().openRawResource(R.raw.stops);
 		Parser parser = new Parser();
 		ArrayList<String> line = parser.generalParseLine(is);
+		
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadStops()", ex.getMessage());
+		}
 
-		int size = line.size();
-		for (int i = 0; i < size; i++) {
-			Stops stop = new Stops(line.get(0));
+		for (String s : line) {
+			Stops stop = new Stops(s);
 			stops.add(stop);
-			ILog.i("counter", "" + ++counter);
+			ILog.i("StopCounter", "" + ++counter);
+		}
+		
+		line.clear();
+	}
+	
+	private void loadStopTimes() {
+		stopTimes = new ArrayList<StopTimes>();
+		int counter = 0;
+
+		InputStream is = getResources().openRawResource(R.raw.stop_times);
+		Parser parser = new Parser();
+		ArrayList<String> line = parser.generalParseLine(is);
+		
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadStopTimes()", ex.getMessage());
+		}
+
+		for (String s : line) {
+			StopTimes stopTime = new StopTimes(s);
+			stopTimes.add(stopTime);
+			ILog.i("StopTimesCounter", "" + ++counter);
 		}
 		
 		line.clear();
@@ -134,15 +173,66 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		InputStream is = getResources().openRawResource(R.raw.routes);
 		Parser parser = new Parser();
 		ArrayList<String> line = parser.generalParseLine(is);
+		
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadRoutes()", ex.getMessage());
+		}
 
-		int size = line.size();
-		for (int i = 0; i < size; i++) {
-			Route route = new Route(line.get(0));
+		for (String s : line) {
+			Route route = new Route(s);
 			routes.add(route);
-			ILog.i("counter", "" + ++counter);
+			ILog.i("RoutesCounter", "" + ++counter);
 		}
 
 		line.clear();
+	}
+	
+	private void loadTrips() {
+		trips = new ArrayList<Trips>();
+		int counter = 0;
+
+		InputStream is = getResources().openRawResource(R.raw.trips);
+		Parser parser = new Parser();
+		ArrayList<String> line = parser.generalParseLine(is);
+
+		for(String s : line){
+			Trips trip = new Trips(s);
+			trips.add(trip);
+			ILog.i("TripCounter", "" + ++counter);			
+		}
+		
+		line.clear();
+		
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadTrips()", ex.getMessage());
+		}
+	}
+	
+	private void loadShapes() {
+		shapes = new ArrayList<Shapes>();
+		int counter = 0;
+
+		InputStream is = getResources().openRawResource(R.raw.shapes);
+		Parser parser = new Parser();
+		ArrayList<String> line = parser.generalParseLine(is);
+
+		for (String s : line) {
+			Shapes shape = new Shapes(s);
+			shapes.add(shape);
+			ILog.d("ShapeCounter", "" + ++counter);
+		}
+		
+		line.clear();
+		
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadShapes()", ex.getMessage());
+		}
 	}
 
 	@Override
