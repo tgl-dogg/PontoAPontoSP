@@ -3,7 +3,7 @@ package inovapap.sp.gtfs;
 import inovapap.sp.util.Parser;
 
 public class Agency {
-	private String agencyId;
+	private int agencyId;
 	private String agencyName;
 	private String agencyUrl;
 	private String agencyTimezone;
@@ -13,7 +13,7 @@ public class Agency {
 		String txt = line;
 		Parser parse = new Parser();
 		
-		this.agencyId = parse.stringParse(txt);
+		this.agencyId = parse.intParse(txt);
 		txt = parse.removeComma(txt);
 		
 		this.agencyName = parse.stringParse(txt);
@@ -29,11 +29,11 @@ public class Agency {
 		txt = parse.removeComma(txt);
 	}
 	
-	public String getAgencyId() {
+	public int getAgencyId() {
 		return agencyId;
 	}
 
-	public void setAgencyId(String agencyId) {
+	public void setAgencyId(int agencyId) {
 		this.agencyId = agencyId;
 	}
 
