@@ -18,7 +18,7 @@ public class SplashScreen extends Activity implements Runnable {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 			Handler handler = new Handler();
-			handler.postDelayed(this, 3000);
+			handler.postDelayed(this, 1);
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
