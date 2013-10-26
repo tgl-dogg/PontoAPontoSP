@@ -6,9 +6,9 @@ public class FareAttributes {
 	private String fareId;
 	private float price;
 	private String currencyType;
-	private String paymentMethod;
-	private int transfers;
-	private int transfer_duration;
+	private int paymentMethod;
+	private String transfers;
+	private int transferDuration;
 	
 	public FareAttributes(String line){
 		String txt = line;
@@ -23,13 +23,13 @@ public class FareAttributes {
 		this.currencyType = parse.stringParse(txt);
 		txt = parse.removeComma(txt);
 		
-		this.paymentMethod = parse.stringParse(txt);
+		this.paymentMethod = parse.intParse(txt);
 		txt = parse.removeComma(txt);
 		
-		this.transfers = parse.intParse(txt);
+		this.transfers = parse.stringParse(txt);
 		txt = parse.removeComma(txt);
 		
-		this.transfer_duration = parse.intParse(txt);		
+		this.transferDuration = parse.intParse(txt);		
 	}
 
 	public String getFareId() {
@@ -56,27 +56,27 @@ public class FareAttributes {
 		this.currencyType = currencyType;
 	}
 
-	public String getPaymentMethod() {
+	public int getPaymentMethod() {
 		return paymentMethod;
 	}
 
-	public void setPaymentMethod(String paymentMethod) {
+	public void setPaymentMethod(int paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public int getTransfers() {
+	public String getTransfers() {
 		return transfers;
 	}
 
-	public void setTransfers(int transfers) {
+	public void setTransfers(String transfers) {
 		this.transfers = transfers;
 	}
 
-	public int getTransfer_duration() {
-		return transfer_duration;
+	public int getTransferDuration() {
+		return transferDuration;
 	}
 
-	public void setTransfer_duration(int transfer_duration) {
-		this.transfer_duration = transfer_duration;
+	public void setTransferDuration(int transferDuration) {
+		this.transferDuration = transferDuration;
 	}
 }
