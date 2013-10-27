@@ -65,6 +65,8 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	@Override
 	protected void onStart() {
 		try {
+			super.onStart();
+			
 			if (!Geral.isNetworkAvailable(this)) {
 				Geral.showOkNotification(this,
 						android.R.drawable.alert_dark_frame, "",
