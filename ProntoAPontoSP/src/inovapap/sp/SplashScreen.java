@@ -40,7 +40,7 @@ public class SplashScreen extends Activity implements Runnable {
 	/** Inicia a Activity PontoAPonto, que contém a visualização do mapa. */
 	private void startPontoAPontoActivity() {
 		Handler handler = new Handler();
-		handler.postDelayed(SplashScreen.this, 1);
+		handler.postDelayed(SplashScreen.this, 3000);
 	}
 
 	@Override
@@ -69,11 +69,10 @@ public class SplashScreen extends Activity implements Runnable {
 
 		@Override
 		protected void onPostExecute(String result) {
-			if (dialog.isShowing()) {
+			if (dialog.isShowing() && dialog != null) {
 				dialog.dismiss();
-			}
-			
-			startPontoAPontoActivity();
+				startPontoAPontoActivity();
+			}			
 		}
 	}
 
