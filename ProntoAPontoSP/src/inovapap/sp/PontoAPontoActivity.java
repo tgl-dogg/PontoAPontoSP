@@ -55,16 +55,23 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 			// R.layout.custom_title);
 
-			if (!Geral.verifyNetwork(this)) {
-				Geral.showOkNotification(this,
-						android.R.drawable.alert_dark_frame, "",
-						getString(R.string.sem_conexao), null).show();
-			}
-
 			initViews();
 			initMap();
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
+		}
+	}
+
+	@Override
+	protected void onStart() {
+		try {
+			if (!Geral.isNetworkAvailable(this)) {
+				Geral.showOkNotification(this,
+						android.R.drawable.alert_dark_frame, "",
+						getString(R.string.sem_conexao), null).show();
+			}
+		} catch (Exception ex) {
+			ILog.e(TAG + "onStart()", ex.getMessage());
 		}
 	}
 

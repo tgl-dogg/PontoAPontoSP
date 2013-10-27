@@ -58,7 +58,7 @@ public class Geral {
 		return dialog;
 	}
 
-	public static boolean verifyNetwork(Context context) {
+	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager
