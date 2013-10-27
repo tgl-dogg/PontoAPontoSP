@@ -9,6 +9,7 @@
         android:id="@+id/title_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#2e2e2e"
         android:orientation="vertical" >
 
         <TableRow
