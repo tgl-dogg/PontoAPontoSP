@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">ProntoAPonto SP</string>
-    <string name="apoio_sptrans">Apoio:</string>
+    <string name="carregando">Carregando, por favor aguarde</string>
+    <string name="sem_conexao">Falha na conexão, por favor cheque suas configurações de rede</string>
 
 </resources>
