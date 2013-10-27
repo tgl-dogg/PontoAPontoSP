@@ -18,6 +18,7 @@ import android.os.Handler;
 
 public class SplashScreen extends Activity implements Runnable {
 	private final String TAG = "SplashScreen ";
+	ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,10 @@ public class SplashScreen extends Activity implements Runnable {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_splash_screen);
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			
+			dialog = new ProgressDialog(SplashScreen.this);
+			dialog.setMessage(getString(R.string.carregando));
+			dialog.setIndeterminate(true);
 
 			new LoadStopsTask().execute("");
 		} catch (Exception ex) {
@@ -50,13 +55,9 @@ public class SplashScreen extends Activity implements Runnable {
 	 * evitando processamento pesado na Thread Visual.
 	 */
 	public class LoadStopsTask extends AsyncTask<String, String, String> {
-		ProgressDialog dialog;
 
 		@Override
 		protected void onPreExecute() {
-			dialog = new ProgressDialog(SplashScreen.this);
-			dialog.setMessage(getString(R.string.carregando));
-			dialog.setIndeterminate(true);
 			dialog.show();
 		}
 
