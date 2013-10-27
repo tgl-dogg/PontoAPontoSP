@@ -63,6 +63,10 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * Inicializa as views colocando atribuindo suas referências do xml por Id e
+	 * atribuindo os respectivos listeners.
+	 */
 	private void initViews() {
 		llLayout = (LinearLayout) findViewById(R.id.layout);
 		llTitleLayout = (LinearLayout) findViewById(R.id.title_linear_layout);
@@ -93,6 +97,10 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		etDestination = (EditText) findViewById(R.id.destination_edit_text);
 	}
 
+	/**
+	 * Inicializa o mapa através de uma biblioteca de compatibilidade para
+	 * atender uma gama maior de dispositivos.
+	 */
 	private void initMap() {
 		android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 		mapFragment = (SupportMapFragment) fragmentManager
@@ -131,6 +139,11 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 	}
 
+	/**
+	 * Procura os pontos de ônibus, metrô e trem mais próximos da localização do
+	 * usuário e os plota na tela com ícone em destaque e informações sobre o
+	 * mesmo.
+	 */
 	private void plotNearbyStops() {
 		ArrayList<Integer> i = new ArrayList<Integer>();
 		double lan1, lon1;
@@ -171,6 +184,21 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		}
 	}
 
+	/**
+	 * Verifica a distância entre dois pares de coordenadas latitude e longitude
+	 * 
+	 * @param lan1
+	 *            Latitude do ponto 1
+	 * @param lon1
+	 *            Longitude do ponto 1
+	 * @param lan2
+	 *            Latitude do ponto 2
+	 * @param lon2
+	 *            Longitude do ponto 2<p>
+	 * 
+	 * @return <b>True</b>, caso a distância entre as localizações for pequena,<br>
+	 *         <b>False</b> caso contrário.
+	 * */
 	private boolean isNearby(double lan1, double lon1, double lan2, double lon2) {
 		double dif1 = lan1 - lan2;
 		double dif2 = lon1 - lon2;

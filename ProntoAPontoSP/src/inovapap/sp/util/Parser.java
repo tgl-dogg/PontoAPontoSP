@@ -11,6 +11,17 @@ public class Parser {
 	private final String TAG = "Parser ";
 
 	// File file = new File("file.txt");
+	/**
+	 * Converte um arquivo de texto no formato padrão gtfs em uma ArrayList de
+	 * Strings.
+	 * 
+	 * @param file
+	 *            Arquivo a ser convertido, no padrão gtfs.
+	 *            <p>
+	 * 
+	 * @return Uma ArrayList onde cada objeto é uma linha do arquivo de texto,
+	 *         ou vazia caso o arquivo de entrada seja inválido.
+	 */
 	public ArrayList<String> generalParseLine(InputStream file) {
 		BufferedReader reader = null;
 		ArrayList<String> text = new ArrayList<String>();
@@ -45,6 +56,15 @@ public class Parser {
 		return text;
 	}
 
+	/**
+	 * Converte em inteiro o próximo valor de uma linha de texto em padrão gtfs.
+	 * 
+	 * @param txt
+	 *            Linha de texto no padrão gtfs.
+	 *            <p>
+	 * 
+	 * @return O inteiro lido, ou -1 em caso de erro. *
+	 */
 	public int intParse(String txt) {
 		int i = -1;
 
@@ -68,6 +88,16 @@ public class Parser {
 		return i;
 	}
 
+	/**
+	 * Converte em ponto flutuante o próximo valor de uma linha de texto em
+	 * padrão gtfs.
+	 * 
+	 * @param txt
+	 *            Linha de texto no padrão gtfs.
+	 *            <p>
+	 * 
+	 * @return O valor lido, ou NaN em caso de erro. *
+	 */
 	public float floatParse(String txt) {
 		float f = Float.NaN;
 
@@ -91,6 +121,16 @@ public class Parser {
 		return f;
 	}
 
+	/**
+	 * Converte em ponto flutuante de dupla precisão o próximo valor de uma
+	 * linha de texto em padrão gtfs.
+	 * 
+	 * @param txt
+	 *            Linha de texto no padrão gtfs.
+	 *            <p>
+	 * 
+	 * @return O valor lido, ou NaN em caso de erro. *
+	 */
 	public double doubleParse(String txt) {
 		Double d = Double.NaN;
 
@@ -114,6 +154,15 @@ public class Parser {
 		return d;
 	}
 
+	/**
+	 * Converte em String o próximo valor de uma linha de texto em padrão gtfs.
+	 * 
+	 * @param txt
+	 *            Linha de texto no padrão gtfs.
+	 *            <p>
+	 * 
+	 * @return A String encontrada, ou null em caso de erro. *
+	 */
 	public String stringParse(String txt) {
 		String s = null;
 
@@ -137,6 +186,17 @@ public class Parser {
 		return s;
 	}
 
+	/**
+	 * Remove todos os campos de um arquivo de texto padrão gtfs até encontrar
+	 * uma vírgula.
+	 * 
+	 * @param txt
+	 *            Linha de texto no padrão gtfs.
+	 *            <p>
+	 * 
+	 * @return A String de entrada com valores removidos até a primeira vírgula
+	 *         encontrada. *
+	 */
 	public String removeComma(String txt) {
 		String s = txt;
 

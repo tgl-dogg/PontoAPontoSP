@@ -32,6 +32,7 @@ public class SplashScreen extends Activity implements Runnable {
 		}
 	}
 
+	/** Inicia a Activity PontoAPonto, que contém a visualização do mapa. */
 	private void startPontoAPontoActivity() {
 		Handler handler = new Handler();
 		handler.postDelayed(SplashScreen.this, 1);
@@ -44,6 +45,10 @@ public class SplashScreen extends Activity implements Runnable {
 		finish();
 	}
 
+	/**
+	 * Task assíncrona para carregar dados de um arquivo de texto em background,
+	 * evitando processamento pesado na Thread Visual.
+	 */
 	public class LoadStopsTask extends AsyncTask<String, String, String> {
 		ProgressDialog dialog;
 
@@ -64,13 +69,17 @@ public class SplashScreen extends Activity implements Runnable {
 		@Override
 		protected void onPostExecute(String result) {
 			startPontoAPontoActivity();
-			
+
 			if (dialog.isShowing()) {
 				dialog.dismiss();
 			}
 		}
 	}
 
+	/**
+	 * Carrega os valores de pontos de ônibus, metrôs e trens do arquivo
+	 * Stops.txt em uma ArrayList global estática.
+	 */
 	private void loadStops() {
 		Geral.stops = new ArrayList<Stops>();
 		int counter = 0;
