@@ -7,6 +7,7 @@ import inovapap.sp.util.ILog;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.location.Location;
 import android.os.Bundle;
@@ -66,7 +67,7 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	protected void onStart() {
 		try {
 			super.onStart();
-			
+
 			if (!Geral.isNetworkAvailable(this)) {
 				Geral.showOkNotification(this,
 						android.R.drawable.alert_dark_frame, "",
@@ -129,9 +130,20 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		switch (v.getId()) {
 
 		case R.id.route_image_view:
+			startActivity(new Intent(this, ItinerarioDemoActivity.class));
+			break;
+
+		case R.id.alert_image_view:
+			startActivity(new Intent(this, AlertaDemoActivity.class));
+			break;
+
+		case R.id.tourism_image_view:
 			plotNearbyStops();
 			break;
-		// TODO adicionar seleção de casos para as views.
+
+		case R.id.suggestion_image_view:
+			startActivity(new Intent(this, SugestaoDemoActivity.class));
+			break;
 		}
 	}
 
