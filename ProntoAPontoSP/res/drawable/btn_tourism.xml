@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:state_enabled="false"
+           android:drawable="@drawable/ic_tourism_disabled" /> <!-- disabled -->
+     <item android:state_pressed="true"
+           android:drawable="@drawable/ic_tourism_active" /> <!-- pressed -->
+     <item android:state_focused="true"
+           android:drawable="@drawable/ic_tourism_active" /> <!-- focused -->
+     <item android:drawable="@drawable/ic_tourism_disabled" /> <!-- default -->
+ </selector>
+     <!-- 
+**************************************************************************
+ ++>>> Controle de Versões automático executado pelo CVS <<<+++  
+**************************************************************************
+
+* $Log: calibracao.h,v $
+* $Source: /Repositorio/2 - bipro1.9/calibracao.h,v $
+
+**************************************************************************
+           +++>>> Fim do arquivo MS_BTN_FLICKER_LARGE.XML <<<+++          
+/*************************************************************************
+-->
