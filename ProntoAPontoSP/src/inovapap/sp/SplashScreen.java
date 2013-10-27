@@ -68,11 +68,11 @@ public class SplashScreen extends Activity implements Runnable {
 
 		@Override
 		protected void onPostExecute(String result) {
-			startPontoAPontoActivity();
-
 			if (dialog.isShowing()) {
 				dialog.dismiss();
 			}
+			
+			startPontoAPontoActivity();
 		}
 	}
 
