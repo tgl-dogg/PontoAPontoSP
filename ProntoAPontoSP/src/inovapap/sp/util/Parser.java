@@ -1,5 +1,9 @@
 package inovapap.sp.util;
 
+import inovapap.sp.gtfs.Shapes;
+import inovapap.sp.gtfs.StopTimes;
+import inovapap.sp.gtfs.Trips;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +47,127 @@ public class Parser {
 		}
 
 		return text;
+	}
+
+	public ArrayList<StopTimes> specificStopTimeParseLine(InputStream file,
+			int id) {
+		BufferedReader reader = null;
+		ArrayList<StopTimes> spt = new ArrayList<StopTimes>();
+
+		try {
+			reader = new BufferedReader(new InputStreamReader(file));
+
+			int cont = 0;
+			while (true) {
+				String s = reader.readLine();
+				if (s != null) {
+					StopTimes stopTime = new StopTimes(s);
+
+					if (stopTime.getStopId() == id) {
+						spt.add(stopTime);
+						ILog.w("StopTimesValidator", "Added: " + id);
+					}
+				} else {
+					break;
+				}
+				ILog.i(TAG + "parsing line", "" + ++cont);
+			}
+		} catch (FileNotFoundException ex) {
+			ILog.e(TAG + "generalParse", ex.getMessage());
+		} catch (IOException ex) {
+			ILog.e(TAG + "generalParse", ex.getMessage());
+		} finally {
+			try {
+				if (reader != null) {
+					reader.close();
+				}
+			} catch (IOException ex) {
+				ILog.e(TAG + "generalParse", ex.getMessage());
+			}
+		}
+
+		return spt;
+	}
+
+	public ArrayList<Trips> specificTripParseLine(InputStream file, String id) {
+		BufferedReader reader = null;
+		ArrayList<Trips> trips = new ArrayList<Trips>();
+
+		try {
+			reader = new BufferedReader(new InputStreamReader(file));
+
+			int cont = 0;
+			while (true) {
+				String s = reader.readLine();
+				if (s != null) {
+					Trips trip = new Trips(s);
+
+					if (trip.getTripId().equals(id)) {
+						trips.add(trip);
+						ILog.w("TripsValidator", "Added: " + id);
+					}
+				} else {
+					break;
+				}
+				ILog.i(TAG + "parsing line", "" + ++cont);
+			}
+		} catch (FileNotFoundException ex) {
+			ILog.e(TAG + "generalParse", ex.getMessage());
+		} catch (IOException ex) {
+			ILog.e(TAG + "generalParse", ex.getMessage());
+		} finally {
+			try {
+				if (reader != null) {
+					reader.close();
+				}
+			} catch (IOException ex) {
+				ILog.e(TAG + "generalParse", ex.getMessage());
+			}
+		}
+
+		return trips;
+	}
+
+	public ArrayList<Shapes> specificShapeParseLine(InputStream file,
+			ArrayList<Integer> id) {
+		BufferedReader reader = null;
+		ArrayList<Shapes> shapes = new ArrayList<Shapes>();
+
+		try {
+			reader = new BufferedReader(new InputStreamReader(file));
+
+			int cont = 0;
+			while (true) {
+				String s = reader.readLine();
+				if (s != null) {
+					Shapes shape = new Shapes(s);
+
+					for (int i : id) {
+						if (shape.getShapeId() == i) {
+							shapes.add(shape);
+							ILog.w("TripsValidator", "Added: " + id);
+						}
+					}
+				} else {
+					break;
+				}
+				ILog.i(TAG + "parsing line", "" + ++cont);
+			}
+		} catch (FileNotFoundException ex) {
+			ILog.e(TAG + "generalParse", ex.getMessage());
+		} catch (IOException ex) {
+			ILog.e(TAG + "generalParse", ex.getMessage());
+		} finally {
+			try {
+				if (reader != null) {
+					reader.close();
+				}
+			} catch (IOException ex) {
+				ILog.e(TAG + "generalParse", ex.getMessage());
+			}
+		}
+
+		return shapes;
 	}
 
 	public int intParse(String txt) {

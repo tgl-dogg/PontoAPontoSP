@@ -1,11 +1,17 @@
 package inovapap.sp;
 
-import java.util.ArrayList;
-
+import inovapap.sp.gtfs.Shapes;
+import inovapap.sp.gtfs.StopTimes;
 import inovapap.sp.gtfs.Stops;
+import inovapap.sp.gtfs.Trips;
+import inovapap.sp.routemaker.ReferencedMarker;
 import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
-import android.content.Intent;
+import inovapap.sp.util.Parser;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import android.content.pm.ActivityInfo;
 import android.location.Location;
 import android.os.Bundle;
@@ -21,13 +27,15 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PontoAPontoActivity extends FragmentActivity implements
-		OnClickListener, TextWatcher {
+		OnClickListener, TextWatcher, OnMarkerClickListener {
 	private final String TAG = "PontoAPontoActivity ";
 
 	private LinearLayout llLayout, llTitleLayout, llBottomLayout;
@@ -40,23 +48,20 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	private SupportMapFragment mapFragment;
 	private GoogleMap map;
 
+	private ArrayList<ReferencedMarker> markers = new ArrayList<ReferencedMarker>();
+
 	@Override
 	protected void onCreate(Bundle b) {
 		try {
 			super.onCreate(b);
 			setContentView(R.layout.interface_layout);
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			
-			loadFromIntent();
+
 			initViews();
 			initMap();
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void loadFromIntent() {
 	}
 
 	private void initViews() {
@@ -97,6 +102,7 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 	private void initMap() {
 		map.setMyLocationEnabled(true);
+		map.setOnMarkerClickListener(this);
 
 	}
 
@@ -127,6 +133,22 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 	@Override
 	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+	}
+
+	@Override
+	public boolean onMarkerClick(Marker mark) {
+		int id = -1;
+		for (ReferencedMarker mk : markers) {
+			if (mk.find(mark)) {
+				int index = markers.indexOf(mk);
+				id = markers.get(index).getId();
+			}
+		}
+
+		findAllRoutes(id);
+
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	private void plotNearbyStops() {
@@ -160,7 +182,9 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			mkop.snippet(stop.getStopDesc());
 			mkop.position(latlgn);
 
-			map.addMarker(mkop);
+			ReferencedMarker mk = new ReferencedMarker();
+			mk.add(map.addMarker(mkop), stop.getStopId());
+			markers.add(mk);
 			ILog.v(TAG + "plotNearbyStops", "Ploting:" + stop.getStopName());
 		}
 	}
@@ -177,6 +201,91 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			dif2 *= -1;
 		}
 
-		return (dif1 <= 0.01 && dif2 <= 0.01);
+		return (dif1 <= 0.005 && dif2 <= 0.005);
+	}
+
+	private void findAllRoutes(int id) {
+		String[] tripId = loadSpecificStopTimes(id);
+		ArrayList<Integer> shapeId = new ArrayList<Integer>();
+		ArrayList<LatLng> rotas = new ArrayList<LatLng>();
+
+		for (String s : tripId) {
+			shapeId = loadSpecificTrip(s);
+		}
+
+		ILog.i("ShapeId", "ShapeIds carregados com sucesso! " + shapeId.size());
+		rotas = loadSpecificShape(shapeId);
+		shapeId.clear();
+		
+
+		ILog.i("Rotas", "Rotas carregadas com sucesso! " + rotas.size());
+
+	}
+
+	private String[] loadSpecificStopTimes(int id) {
+		Geral.stopTimes = new ArrayList<StopTimes>();
+		String[] array;
+
+		InputStream is = getResources().openRawResource(R.raw.stop_times);
+		Parser parser = new Parser();
+		Geral.stopTimes = parser.specificStopTimeParseLine(is, id);
+		array = new String[Geral.stopTimes.size()];
+
+		for (StopTimes stp : Geral.stopTimes) {
+			array[Geral.stopTimes.indexOf(stp)] = stp.getTripId();
+		}
+
+		Geral.stopTimes.clear();
+
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadSpecificStopTimes()", ex.getMessage());
+		}
+
+		return array;
+	}
+
+	private ArrayList<Integer> loadSpecificTrip(String id) {
+		ArrayList<Integer> ar = new ArrayList<Integer>();
+		InputStream is = getResources().openRawResource(R.raw.trips);
+		Parser parser = new Parser();
+		Geral.trips = parser.specificTripParseLine(is, id);
+
+		for (Trips trip : Geral.trips) {
+			ar.add(trip.getShapeId());
+		}
+
+		Geral.trips.clear();
+
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadSpecificTrip()", ex.getMessage());
+		}
+		
+		return ar;
+	}
+
+	private ArrayList<LatLng> loadSpecificShape(ArrayList<Integer> shapeId) {
+		ArrayList<LatLng> ll = new ArrayList<LatLng>();
+
+		InputStream is = getResources().openRawResource(R.raw.shapes);
+		Parser parser = new Parser();
+		Geral.shapes = parser.specificShapeParseLine(is, shapeId);
+
+		for (Shapes shape : Geral.shapes) {
+			ll.add(new LatLng(shape.getShapePtLat(), shape.getShapePtLon()));
+		}
+
+		Geral.shapes.clear();
+
+		try {
+			is.close();
+		} catch (Exception ex) {
+			ILog.e(TAG + "loadSpecificTrip()", ex.getMessage());
+		}
+
+		return ll;
 	}
 }
