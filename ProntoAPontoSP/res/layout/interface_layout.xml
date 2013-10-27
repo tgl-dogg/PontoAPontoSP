@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_weather" />
 
         <ImageView
             android:id="@+id/sync_image_view"
@@ -80,7 +80,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="false"
             android:layout_below="@id/weather_image_view"
-            android:src="@drawable/ic_plusone_standard_off_client" />
+            android:src="@drawable/ic_plusone_standard_off_client"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -88,7 +89,8 @@
         android:id="@+id/bottom_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".3"
+        android:layout_weight=".2"
+        android:background="#2e2e2e"
         android:orientation="horizontal" >
 
         <ImageView
@@ -96,28 +98,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/btn_tourism" />
 
         <ImageView
             android:id="@+id/route_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/btn_routes" />
 
         <ImageView
             android:id="@+id/alert_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/btn_alert" />
 
         <ImageView
             android:id="@+id/suggestion_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/btn_suggest" />
     </LinearLayout>
 
 </LinearLayout>

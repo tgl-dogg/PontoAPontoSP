@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,8 +48,13 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	protected void onCreate(Bundle b) {
 		try {
 			super.onCreate(b);
+
+			// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 			setContentView(R.layout.interface_layout);
+
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+			// R.layout.custom_title);
 
 			initViews();
 			initMap();
@@ -152,7 +158,8 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			LatLng latlgn = new LatLng(stop.getStopLat(), stop.getStopLon());
 
 			// TODO ícone para plots
-			mkop.icon(BitmapDescriptorFactory.fromResource(android.R.drawable.star_big_on));
+			mkop.icon(BitmapDescriptorFactory
+					.fromResource(android.R.drawable.star_big_on));
 			mkop.title(stop.getStopName());
 			mkop.snippet(stop.getStopDesc());
 			mkop.position(latlgn);
