@@ -5,6 +5,7 @@ import inovapap.sp.gtfs.StopTimes;
 import inovapap.sp.gtfs.Stops;
 import inovapap.sp.gtfs.Trips;
 import inovapap.sp.routemaker.ReferencedMarker;
+import inovapap.sp.routemaker.Route;
 import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
 import inovapap.sp.util.Parser;
@@ -219,7 +220,9 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		
 
 		ILog.i("Rotas", "Rotas carregadas com sucesso! " + rotas.size());
-
+		
+		drawRoutes(rotas);
+		rotas.clear();
 	}
 
 	private String[] loadSpecificStopTimes(int id) {
@@ -287,5 +290,16 @@ public class PontoAPontoActivity extends FragmentActivity implements
 		}
 
 		return ll;
+	}
+	
+	void drawRoutes(ArrayList<LatLng> routes){
+		Route route = new Route();
+
+		int size = routes.size() - 1;
+		for(int i = 0; i < size; i++){
+			route.drawRoute(map, this, routes.get(0), routes.get(1), Route.LANGUAGE_ENGLISH);	
+			routes.remove(0);
+			ILog.i("drawRoutes", "Desenhando rotas...");
+		}
 	}
 }

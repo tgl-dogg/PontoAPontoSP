@@ -40,12 +40,12 @@ public class Route {
          String lang;
          
          
-         static String LANGUAGE_SPANISH = "es";
-         static String LANGUAGE_ENGLISH = "en";
-         static String LANGUAGE_FRENCH = "fr";
-         static String LANGUAGE_GERMAN = "de";
-         static String LANGUAGE_CHINESE_SIMPLIFIED = "zh-CN";
-         static String LANGUAGE_CHINESE_TRADITIONAL = "zh-TW";
+         public static String LANGUAGE_SPANISH = "es";
+         public static String LANGUAGE_ENGLISH = "en";
+         public static String LANGUAGE_FRENCH = "fr";
+         public static String LANGUAGE_GERMAN = "de";
+         public static String LANGUAGE_CHINESE_SIMPLIFIED = "zh-CN";
+         public static String LANGUAGE_CHINESE_TRADITIONAL = "zh-TW";
          
          
          public boolean drawRoute(GoogleMap map, Context c, ArrayList<LatLng> points, boolean withIndications, String language, boolean optimize)
