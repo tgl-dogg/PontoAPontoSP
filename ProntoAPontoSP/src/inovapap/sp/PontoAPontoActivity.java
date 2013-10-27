@@ -1,7 +1,13 @@
 package inovapap.sp;
 
+import java.util.ArrayList;
+
+import inovapap.sp.gtfs.Stops;
+import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
@@ -16,6 +22,9 @@ import android.widget.TableRow;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PontoAPontoActivity extends FragmentActivity implements
 		OnClickListener, TextWatcher {
@@ -37,12 +46,17 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			super.onCreate(b);
 			setContentView(R.layout.interface_layout);
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+			
+			loadFromIntent();
 			initViews();
 			initMap();
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void loadFromIntent() {
 	}
 
 	private void initViews() {
@@ -89,7 +103,10 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		
+
+		case R.id.route_image_view:
+			plotNearbyStops();
+			break;
 		// TODO adicionar seleção de casos para as views.
 		}
 	}
@@ -110,5 +127,56 @@ public class PontoAPontoActivity extends FragmentActivity implements
 
 	@Override
 	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+	}
+
+	private void plotNearbyStops() {
+		ArrayList<Integer> i = new ArrayList<Integer>();
+		double lan1, lon1;
+
+		Location location = map.getMyLocation();
+		if (location != null) {
+			lan1 = map.getMyLocation().getLatitude();
+			lon1 = map.getMyLocation().getLongitude();
+		} else {
+			Geral.showOkNotification(this, 0, "", "SemNet", null);
+			return;
+		}
+
+		for (Stops stop : Geral.stops) {
+			if (isNearby(lan1, lon1, stop.getStopLat(), stop.getStopLon())) {
+				i.add(Geral.stops.indexOf(stop));
+				ILog.v(TAG + "plotNearbyStops", "Found:" + i.get(i.size() - 1));
+			}
+		}
+
+		for (int x : i) {
+			Stops stop = Geral.stops.get(x);
+			MarkerOptions mkop = new MarkerOptions();
+			LatLng latlgn = new LatLng(stop.getStopLat(), stop.getStopLon());
+
+			mkop.icon(BitmapDescriptorFactory
+					.fromResource(android.R.drawable.star_big_on));
+			mkop.title(stop.getStopName());
+			mkop.snippet(stop.getStopDesc());
+			mkop.position(latlgn);
+
+			map.addMarker(mkop);
+			ILog.v(TAG + "plotNearbyStops", "Ploting:" + stop.getStopName());
+		}
+	}
+
+	private boolean isNearby(double lan1, double lon1, double lan2, double lon2) {
+		double dif1 = lan1 - lan2;
+		double dif2 = lon1 - lon2;
+
+		if (dif1 < 0) {
+			dif1 *= -1;
+		}
+
+		if (dif2 < 0) {
+			dif2 *= -1;
+		}
+
+		return (dif1 <= 0.01 && dif2 <= 0.01);
 	}
 }

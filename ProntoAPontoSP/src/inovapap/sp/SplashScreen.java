@@ -8,6 +8,7 @@ import inovapap.sp.gtfs.Shapes;
 import inovapap.sp.gtfs.StopTimes;
 import inovapap.sp.gtfs.Stops;
 import inovapap.sp.gtfs.Trips;
+import inovapap.sp.util.Geral;
 import inovapap.sp.util.ILog;
 import inovapap.sp.util.Parser;
 import android.app.Activity;
@@ -20,12 +21,6 @@ import android.os.Handler;
 public class SplashScreen extends Activity implements Runnable {
 	private final String TAG = "SplashScreen ";
 
-	private ArrayList<Route> routes;
-	private ArrayList<Stops> stops;
-	private ArrayList<StopTimes> stopTimes;
-	private ArrayList<Trips> trips;
-	private ArrayList<Shapes> shapes;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
@@ -33,8 +28,14 @@ public class SplashScreen extends Activity implements Runnable {
 			setContentView(R.layout.activity_splash_screen);
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+//			new LoadStopsTask().execute("");
+//			new LoadStopTimesTask().execute("");
+//			new LoadRoutesTask().execute("");
+//			new LoadTripsTask().execute("");
+//			new LoadShapesTask().execute("");	
+			
 			Handler handler = new Handler();
-			handler.postDelayed(this, 2000);
+			handler.postDelayed(SplashScreen.this, 1);
 		} catch (Exception ex) {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
@@ -42,20 +43,15 @@ public class SplashScreen extends Activity implements Runnable {
 
 	@Override
 	public void run() {
-		new LoadStopsTask().execute("");
-		new LoadStopTimesTask().execute("");
-		new LoadRoutesTask().execute("");
-		new LoadTripsTask().execute("");
-		new LoadShapesTask().execute("");
+		loadStops();
+		Intent intent = new Intent(this, PontoAPontoActivity.class);
+//		intent.putExtra("routes", routes);
+//		intent.putExtra("stops", stops);
+//		intent.putExtra("stopTimes", stopTimes);
+//		intent.putExtra("trips", trips);
+//		intent.putExtra("shapes", shapes);
 
-		Intent intent = new Intent();
-		intent.putExtra("routes", routes);
-		intent.putExtra("stops", stops);
-		intent.putExtra("stopTimes", stopTimes);
-		intent.putExtra("trips", trips);
-		intent.putExtra("shapes", shapes);
-
-		startActivity(new Intent(this, PontoAPontoActivity.class));
+		startActivity(intent);
 		finish();
 	}
 
@@ -100,7 +96,7 @@ public class SplashScreen extends Activity implements Runnable {
 	}
 
 	private void loadStops() {
-		stops = new ArrayList<Stops>();
+		Geral.stops = new ArrayList<Stops>();
 		int counter = 0;
 
 		InputStream is = getResources().openRawResource(R.raw.stops);
@@ -115,7 +111,7 @@ public class SplashScreen extends Activity implements Runnable {
 
 		for (String s : line) {
 			Stops stop = new Stops(s);
-			stops.add(stop);
+			Geral.stops.add(stop);
 			ILog.i("StopCounter", "" + ++counter);
 		}
 
@@ -123,7 +119,7 @@ public class SplashScreen extends Activity implements Runnable {
 	}
 
 	private void loadStopTimes() {
-		stopTimes = new ArrayList<StopTimes>();
+		Geral.stopTimes = new ArrayList<StopTimes>();
 		int counter = 0;
 
 		InputStream is = getResources().openRawResource(R.raw.stop_times);
@@ -138,7 +134,7 @@ public class SplashScreen extends Activity implements Runnable {
 
 		for (String s : line) {
 			StopTimes stopTime = new StopTimes(s);
-			stopTimes.add(stopTime);
+			Geral.stopTimes.add(stopTime);
 			ILog.i("StopTimesCounter", "" + ++counter);
 		}
 
@@ -146,7 +142,7 @@ public class SplashScreen extends Activity implements Runnable {
 	}
 
 	private void loadRoutes() {
-		routes = new ArrayList<Route>();
+		Geral.routes = new ArrayList<Route>();
 		int counter = 0;
 
 		InputStream is = getResources().openRawResource(R.raw.routes);
@@ -161,7 +157,7 @@ public class SplashScreen extends Activity implements Runnable {
 
 		for (String s : line) {
 			Route route = new Route(s);
-			routes.add(route);
+			Geral.routes.add(route);
 			ILog.i("RoutesCounter", "" + ++counter);
 		}
 
@@ -169,7 +165,7 @@ public class SplashScreen extends Activity implements Runnable {
 	}
 
 	private void loadTrips() {
-		trips = new ArrayList<Trips>();
+		Geral.trips = new ArrayList<Trips>();
 		int counter = 0;
 
 		InputStream is = getResources().openRawResource(R.raw.trips);
@@ -178,7 +174,7 @@ public class SplashScreen extends Activity implements Runnable {
 
 		for (String s : line) {
 			Trips trip = new Trips(s);
-			trips.add(trip);
+			Geral.trips.add(trip);
 			ILog.i("TripCounter", "" + ++counter);
 		}
 
@@ -192,7 +188,7 @@ public class SplashScreen extends Activity implements Runnable {
 	}
 
 	private void loadShapes() {
-		shapes = new ArrayList<Shapes>();
+		Geral.shapes = new ArrayList<Shapes>();
 		int counter = 0;
 
 		InputStream is = getResources().openRawResource(R.raw.shapes);
@@ -201,7 +197,7 @@ public class SplashScreen extends Activity implements Runnable {
 
 		for (String s : line) {
 			Shapes shape = new Shapes(s);
-			shapes.add(shape);
+			Geral.shapes.add(shape);
 			ILog.d("ShapeCounter", "" + ++counter);
 		}
 
