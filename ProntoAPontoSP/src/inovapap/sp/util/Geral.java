@@ -12,6 +12,8 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Geral {
 	public static ArrayList<Route> routes;
@@ -19,7 +21,7 @@ public class Geral {
 	public static ArrayList<StopTimes> stopTimes;
 	public static ArrayList<Trips> trips;
 	public static ArrayList<Shapes> shapes;
-	
+
 	public static Builder showNotification(final Context context, int icon,
 			String title, String message) {
 
@@ -54,5 +56,13 @@ public class Geral {
 		dialog.setNegativeButton(noButton, noListener);
 
 		return dialog;
+	}
+
+	public static boolean verifyNetwork(Context context) {
+		ConnectivityManager connectivityManager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 }

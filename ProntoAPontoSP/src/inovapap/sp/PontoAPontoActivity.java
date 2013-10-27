@@ -15,7 +15,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,6 +54,12 @@ public class PontoAPontoActivity extends FragmentActivity implements
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 			// R.layout.custom_title);
+
+			if (!Geral.verifyNetwork(this)) {
+				Geral.showOkNotification(this,
+						android.R.drawable.alert_dark_frame, "",
+						getString(R.string.sem_conexao), null).show();
+			}
 
 			initViews();
 			initMap();
@@ -194,7 +199,8 @@ public class PontoAPontoActivity extends FragmentActivity implements
 	 * @param lan2
 	 *            Latitude do ponto 2
 	 * @param lon2
-	 *            Longitude do ponto 2<p>
+	 *            Longitude do ponto 2
+	 *            <p>
 	 * 
 	 * @return <b>True</b>, caso a distância entre as localizações for pequena,<br>
 	 *         <b>False</b> caso contrário.
