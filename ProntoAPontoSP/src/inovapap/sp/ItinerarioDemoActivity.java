@@ -18,4 +18,10 @@ public class ItinerarioDemoActivity extends Activity {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
 	}
+	
+	@Override
+	public void onBackPressed(){
+		super.onBackPressed();
+		finish();
+	}
 }

@@ -25,6 +25,12 @@ public class AlertaDemoActivity extends Activity implements OnClickListener {
 			ILog.e(TAG + "onCreate()", ex.getMessage());
 		}
 	}
+	
+	@Override
+	public void onBackPressed(){
+		super.onBackPressed();
+		finish();
+	}
 
 	@Override
 	public void onClick(View v) {
