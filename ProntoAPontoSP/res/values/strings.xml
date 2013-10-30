@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ProntoAPonto SP</string>
+    <string name="app_name">PontoAPonto SP</string>
     <string name="apoio_sptrans">Supported by:</string>
     <string name="carregando">Loading, please wait</string>
     <string name="sem_conexao">Connection failed, please check your network settings</string>
